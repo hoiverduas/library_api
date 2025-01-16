@@ -65,9 +65,17 @@ public class BookController {
     @PutMapping("/{id}")
     public  ResponseEntity<Book> updateBook(@PathVariable Long id ,@RequestBody Book book) throws BookNotFound {
 
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(this.bookservice.updateBook(id,book));
+       try {
+
+           return ResponseEntity
+                   .status(HttpStatus.OK)
+                   .body(this.bookservice.updateBook(id,book));
+
+       }catch (RuntimeException e){
+
+           return ResponseEntity
+                   .status(HttpStatus.NOT_FOUND).build();
+       }
 
     }
 
