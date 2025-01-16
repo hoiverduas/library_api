@@ -36,9 +36,16 @@ public class BookController {
             throw new ValidationException("Error : " + errorMessage);
         }
 
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(this.bookservice.createBook(book));
+       try {
+           return ResponseEntity
+                   .status(HttpStatus.CREATED)
+                   .body(this.bookservice.createBook(book));
+       }catch (RuntimeException e){
+
+           return ResponseEntity
+                   .status(HttpStatus.BAD_REQUEST).build();
+       }
+
     }
 
     @GetMapping
